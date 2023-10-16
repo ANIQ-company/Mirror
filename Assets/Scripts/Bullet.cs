@@ -10,7 +10,7 @@ public class Bullet : NetworkBehaviour
 
     public void Start()
     {
-        Invoke("AutoDestroy", 3f);
+        Invoke("Cmd_AutoDestroy", 3f);
     }
     void Update()
     {
@@ -23,6 +23,10 @@ public class Bullet : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!isServer)
+        {
+            return;
+        }
         if (other.CompareTag("Player"))
         {
             target = other.gameObject.GetComponent<PlayerHealth>();

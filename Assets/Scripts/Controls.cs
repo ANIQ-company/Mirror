@@ -47,33 +47,33 @@ public class Controls : NetworkBehaviour
 
     private void CheckInputs()
     {
-        if (Input.GetKey(KeyCode.W)) Cmd_MoveForward();
-        if (Input.GetKey(KeyCode.A)) Cmd_StrifeLeft();
-        if (Input.GetKey(KeyCode.D)) Cmd_StrifeRight();
-        if (Input.GetKey(KeyCode.S)) Cmd_MoveBackwards();
+        if (Input.GetKey(KeyCode.W)) /*Cmd_*/MoveForward();
+        if (Input.GetKey(KeyCode.A)) /*Cmd_*/StrifeLeft();
+        if (Input.GetKey(KeyCode.D)) /*Cmd_*/StrifeRight();
+        if (Input.GetKey(KeyCode.S)) /*Cmd_*/MoveBackwards();
 
     }
    
-    [Command(requiresAuthority = false)]
-    private void Cmd_MoveBackwards()
+    //[Command(requiresAuthority = false)]
+    private void /*Cmd_*/MoveBackwards()
     {
         transform.position -= transform.forward * Time.deltaTime * speed;
     }
 
-    [Command(requiresAuthority = false)]
-    private void Cmd_StrifeRight()
+    //[Command(requiresAuthority = false)]
+    private void /*Cmd_*/StrifeRight()
     {
         transform.position += transform.right * Time.deltaTime * speed;
     }
 
-    [Command(requiresAuthority = false)]
-    private void Cmd_StrifeLeft()
+    //[Command(requiresAuthority = false)]
+    private void /*Cmd_*/StrifeLeft()
     {
         transform.position -= transform.right * Time.deltaTime * speed;
     }
 
-    [Command(requiresAuthority = false)]
-    private void Cmd_MoveForward()
+    //[Command(requiresAuthority = false)]
+    private void /*Cmd_*/MoveForward()
     {
         transform.position += transform.forward * Time.deltaTime * speed;
     }
