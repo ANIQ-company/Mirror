@@ -14,6 +14,10 @@ public class Bullet : NetworkBehaviour
     }
     void Update()
     {
+        if (!isServer)
+        {
+            GetComponent<CapsuleCollider>().enabled = false;
+        }
         transform.position += transform.forward * Time.deltaTime * speed;
     }
 
@@ -23,7 +27,7 @@ public class Bullet : NetworkBehaviour
         {
             target = other.gameObject.GetComponent<PlayerHealth>();
 
-            target.TakeDmg(dmg);
+            target.TakeDmg(dmg, target.connectionToClient);
             if (target.health <= 0)
             {
                 target.DestroyPlayer();

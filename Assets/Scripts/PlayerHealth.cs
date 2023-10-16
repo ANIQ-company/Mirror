@@ -18,10 +18,25 @@ public class PlayerHealth : NetworkBehaviour
         hpText.text = health.ToString() + "/100";
     }
 
-    public void TakeDmg(int dmg)
+    
+    public void TakeDmg(int dmg, NetworkConnectionToClient client)
     {
         health -= dmg;
-        hpText.text = health.ToString() + "/100";
+        Rpc_ShareHealthInfo(health);
+        Rpc_UpdatePlayerHealth(client, health);
+    }
+
+
+    [TargetRpc]
+    public void Rpc_UpdatePlayerHealth(NetworkConnectionToClient client, int newHealth)
+    {
+        hpText.text = newHealth.ToString() + "/100";
+    }
+
+    [ClientRpc]
+    public void Rpc_ShareHealthInfo(int newHealth)
+    {
+        print("player has " + newHealth + "left!");
     }
 
     public void KillScore()

@@ -28,11 +28,11 @@ public class Fire : NetworkBehaviour
     void Shoot()
     {
         nextFireTime = Time.time + fireRate;
-        CmdShoot();
+        Cmd_Shoot();
     }
 
     [Command]
-    public void CmdShoot()
+    public void Cmd_Shoot()
     {
         GameObject go = Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         Bullet b = go.GetComponent<Bullet>();
