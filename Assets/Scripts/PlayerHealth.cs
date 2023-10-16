@@ -10,8 +10,8 @@ public class PlayerHealth : NetworkBehaviour
     public TextMeshProUGUI hpText;
     public TextMeshProUGUI scoreText;
 
-
-    public void DestroyPlayer()
+    [TargetRpc]
+    public void Target_DestroyPlayer(NetworkConnectionToClient client)
     {
         transform.position = Vector3.zero;
         health = 100;
@@ -19,7 +19,8 @@ public class PlayerHealth : NetworkBehaviour
     }
 
     
-    public void TakeDmg(int dmg, NetworkConnectionToClient client)
+    [Command]
+    public void Cmd_TakeDmg(int dmg, NetworkConnectionToClient client)
     {
         health -= dmg;
         Rpc_ShareHealthInfo(health);
@@ -39,9 +40,34 @@ public class PlayerHealth : NetworkBehaviour
         print("player has " + newHealth + "left!");
     }
 
-    public void KillScore()
+    [TargetRpc]
+    public void Target_KillScore(NetworkConnectionToClient client)
     {
+        print(isServer);
         score++;
         scoreText.text = score.ToString();
+
+        Cmd_SendScoreInfo(client);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void Cmd_SendScoreInfo(NetworkConnectionToClient client)
+    {
+        //Target_UpdateScoreHealth(client, score);
+        Rpc_ShareScoreInfo(score);
+    }
+
+
+
+    [TargetRpc]
+    public void Target_UpdateScoreHealth(NetworkConnectionToClient client, int score)
+    {
+        scoreText.text = score.ToString();
+    }
+
+    [ClientRpc]
+    public void Rpc_ShareScoreInfo(int score)
+    {
+        print("player has " + score + "point!");
     }
 }

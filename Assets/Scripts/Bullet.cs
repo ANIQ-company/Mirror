@@ -31,11 +31,11 @@ public class Bullet : NetworkBehaviour
         {
             target = other.gameObject.GetComponent<PlayerHealth>();
 
-            target.TakeDmg(dmg, target.connectionToClient);
+            target.Cmd_TakeDmg(dmg, target.connectionToClient);
             if (target.health <= 0)
             {
-                target.DestroyPlayer();
-                owner.KillScore();
+                target.Target_DestroyPlayer(connectionToClient);
+                owner.Target_KillScore(connectionToClient);
             }
             CancelInvoke();
             Cmd_AutoDestroy();
