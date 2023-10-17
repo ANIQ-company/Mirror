@@ -25,17 +25,18 @@ public class Bullet : NetworkBehaviour
     {
         if (!isServer)
         {
+            print("Returning...");
             return;
         }
         if (other.CompareTag("Player"))
         {
             target = other.gameObject.GetComponent<PlayerHealth>();
 
-            target.Cmd_TakeDmg(dmg, target.connectionToClient);
+            target.Cmd_TakeDmg(dmg, other.gameObject.GetComponent<NetworkIdentity>().connectionToClient);
             if (target.health <= 0)
             {
-                target.Target_DestroyPlayer(connectionToClient);
-                owner.Target_KillScore(connectionToClient);
+                target.Target_DestroyPlayer(other.gameObject.GetComponent<NetworkIdentity>().connectionToClient);
+                owner.Target_KillScore(owner.gameObject.GetComponent<NetworkIdentity>().connectionToClient);
             }
             CancelInvoke();
             Cmd_AutoDestroy();

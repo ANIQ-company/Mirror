@@ -19,7 +19,7 @@ public class PlayerHealth : NetworkBehaviour
     }
 
     
-    [Command]
+    [Command(requiresAuthority = false)]
     public void Cmd_TakeDmg(int dmg, NetworkConnectionToClient client)
     {
         health -= dmg;
